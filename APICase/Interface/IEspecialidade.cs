@@ -19,7 +19,7 @@ namespace APICase.Interface
         //Alterar a Especialidade
         void Update(Especialidade especialidade);
 
-        //Deletar a Consulta
+        //Deletar a Especialidade
         void Delete(Especialidade especialidade);
 
         //Update com Patch

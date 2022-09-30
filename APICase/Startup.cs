@@ -80,6 +80,9 @@ namespace APICase
 
             services.AddTransient<ClinicaContext, ClinicaContext>();
             services.AddTransient<IConsulta, ConsultaRepository>();
+            services.AddTransient<IEspecialidade, EspecialidadeRepository>();
+            services.AddTransient<ILogin, LoginRepository>();
+            services.AddTransient<IMedico, MedicoRepository>();
 
         }
 
