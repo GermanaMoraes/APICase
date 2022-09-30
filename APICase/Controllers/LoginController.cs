@@ -8,27 +8,26 @@ namespace APICase.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class LoginController : ControllerBase
+
+        private readonly ILogin repo;
+
+        public LoginController(ILogin _repo)
         {
-            private readonly ILogin repo;
-
-            public LoginController(ILogin _repo)
-            {
-                repo = _repo;
-            }
+            repo = _repo;
+        }
 
 
-            [HttpPost]
-            public IActionResult Logar(string email, string senha)
-            {
-                var logar = repo.Logar(email, senha);
-                if (logar == null)
-                    return Unauthorized();
+        [HttpPost]
+        public IActionResult Logar(string email, string senha)
+        {
+            var logar = repo.Logar(email, senha);
+            if (logar == null)
+                return Unauthorized();
 
-                return Ok(new { token = logar });
-            }
+            return Ok(new { token = logar });
         }
     }
 }
+
+
+

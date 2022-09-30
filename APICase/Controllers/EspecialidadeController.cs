@@ -9,26 +9,27 @@ namespace APICase.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class EspecialidadeController : ControllerBase
     {
-        private readonly IUsuario repositorio;
+        private readonly IEspecialidade repositorio;
 
-        public UsuarioController(IUsuario repositorio)
+        public EspecialidadeController(IEspecialidade _repositorio)
         {
-            this.repositorio = repositorio;
+            repositorio = _repositorio;
         }
 
+
         /// <summary>
-        /// Cadastrar um Usuário no banco de dados.
+        /// Cadastrar uma Especialidade no banco de dados.
         /// </summary>
-        /// <param name="usuario"></param>
+        /// <param name="consulta"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Cadastrar(Usuario usuario)
+        public IActionResult Cadastrar(Especialidade especialidade)
         {
             try
             {
-                var retorno = repositorio.Insert(usuario);
+                var retorno = repositorio.Insert(especialidade);
                 return Ok(retorno);
             }
             catch (System.Exception ex)
@@ -41,9 +42,8 @@ namespace APICase.Controllers
             }
         }
 
-
         /// <summary>
-        /// Listar todas os Usuários.
+        /// Listar todas as especialidades
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -65,7 +65,7 @@ namespace APICase.Controllers
         }
 
         /// <summary>
-        /// Buscar um Usuário por Id.
+        /// Buscar uma especialidad por Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace APICase.Controllers
                 var retorno = repositorio.GetById(id);
                 if (retorno == null)
                 {
-                    return NotFound(new { Message = "Usuario não encontrado" });
+                    return NotFound(new { Message = " Especialidade não encontrada" });
                 }
 
                 return Ok(retorno);
@@ -92,19 +92,21 @@ namespace APICase.Controllers
             }
         }
 
+
         /// <summary>
-        /// Alterar um Usuário. É necessário implementar o Id na aplicação.
+        /// Alterar uma consulta.  É necessário implementar o Id na aplicação.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="usuario"></param>
+        /// <param name="consulta"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult Alterar(int id, Usuario usuario)
+        [Authorize]
+        public IActionResult Alterar(int id, Especialidade especialidade)
         {
             try
             {
                 //Verificar se os ids batem
-                if (id != usuario.Id)
+                if (id != especialidade.Id)
                 {
                     return BadRequest();
                 }
@@ -119,7 +121,7 @@ namespace APICase.Controllers
                     });
                 }
                 //Alterar
-                repositorio.Update(usuario);
+                repositorio.Update(especialidade);
                 return NoContent();
             }
             catch (System.Exception ex)
@@ -135,28 +137,29 @@ namespace APICase.Controllers
         }
 
         /// <summary>
-        ///Alterar algo específico no Usuário. Modelo: "op", "path", "value".
+        /// Alterar algo específico na Consulta. Modelo: "op", "path", "value".
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="patchUsuario"></param>
+        /// <param name="patchConsulta"></param>
         /// <returns></returns>
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument patchUsuario)
+        [Authorize]
+        public IActionResult Patch(int id, [FromBody] JsonPatchDocument patchEspecialidade)
         {
             try
             {
-                if (patchUsuario == null)
+                if (patchEspecialidade == null)
                 { return BadRequest(); }
 
-                var usuario = repositorio.GetById(id);
-                if (usuario == null)
+                var especialidade = repositorio.GetById(id);
+                if (especialidade == null)
                 {
-                    return NotFound(new { Message = "Usuário não encontrado." });
+                    return NotFound(new { Message = "Especialidade não encontrada." });
                 }
+                repositorio.UpdatePatch(patchEspecialidade, especialidade);
 
-                repositorio.UpdatePatch(patchUsuario, usuario);
 
-                return Ok(usuario);
+                return Ok(especialidade);
 
 
             }
@@ -172,8 +175,10 @@ namespace APICase.Controllers
         }
 
 
+
+
         /// <summary>
-        /// Deletar um Usuário
+        /// Deletar uma Consulta.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -183,14 +188,15 @@ namespace APICase.Controllers
         {
             try
             {
-                var buscar = repositorio.GetById(id);
-                if (buscar == null)
+                var item = repositorio.GetById(id);
+                if (item == null)
                 {
-                    return NotFound(new { Message = "Usuário não encontrado." });
+                    return NotFound();
                 }
-
-                repositorio.Delete(buscar);
+                repositorio.Delete(item);
                 return NoContent();
+
+
 
             }
             catch (System.Exception ex)
@@ -207,15 +213,7 @@ namespace APICase.Controllers
 
 
     }
+
 }
-
-
-
-
-
-
-
-
     
-
 

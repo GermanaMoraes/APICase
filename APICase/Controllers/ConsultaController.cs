@@ -1,5 +1,6 @@
 ﻿using APICase.Interface;
 using APICase.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace APICase.Controllers
             /// <param name="consulta"></param>
             /// <returns></returns>
             [HttpPost]
+            [Authorize]
             public IActionResult Cadastrar(Consulta consulta)
             {
                 try
@@ -103,6 +105,7 @@ namespace APICase.Controllers
             /// <param name="consulta"></param>
             /// <returns></returns>
             [HttpPut("{id}")]
+            [Authorize]
             public IActionResult Alterar(int id, Consulta consulta)
             {
                 try
@@ -184,6 +187,7 @@ namespace APICase.Controllers
             /// <param name="id"></param>
             /// <returns></returns>
             [HttpDelete("{id}")]
+            [Authorize]
             public IActionResult Delete(int id)
             {
                 try
