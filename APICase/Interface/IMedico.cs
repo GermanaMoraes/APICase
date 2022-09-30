@@ -22,6 +22,6 @@ namespace APICase.Interface
         void Delete(Medico medico);
 
         //Update com Patch
-        void UpdatePatch(JsonPatchDocument patchconsulta, Medico medico);
+        void UpdatePatch(JsonPatchDocument patchmedico, Medico medico);
     }
 }

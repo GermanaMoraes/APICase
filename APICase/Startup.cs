@@ -83,6 +83,7 @@ namespace APICase
             services.AddTransient<IEspecialidade, EspecialidadeRepository>();
             services.AddTransient<ILogin, LoginRepository>();
             services.AddTransient<IMedico, MedicoRepository>();
+            services.AddTransient<IPaciente, PacienteRepository>();
 
         }
 
