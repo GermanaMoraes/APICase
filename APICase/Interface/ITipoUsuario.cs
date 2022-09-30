@@ -1,13 +1,16 @@
-﻿namespace APICase.Interface
+﻿using APICase.Models;
+using Microsoft.AspNetCore.JsonPatch;
+using System.Collections.Generic;
+namespace APICase.Interface
 {
     public interface ITipoUsuario
     {
 
-        //Listar todas os tipos de usuários
-        ICollection<Medico> GetAll();
+        //Listar todas os tipos 
+        ICollection<TipoUsuario> GetAll();
 
         //Consultar por Id
-        Medico GetById(int id);
+        TipoUsuario GetById(int id);
 
         
     }
