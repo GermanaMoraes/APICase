@@ -85,6 +85,9 @@ namespace APICase
             services.AddTransient<IPaciente, PacienteRepository>();
             services.AddTransient<IUsuario, UsuarioRepository>();
             services.AddTransient<ILogin, LoginRepository>();
+
+           
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
