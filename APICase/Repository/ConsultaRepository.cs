@@ -2,7 +2,9 @@
 using APICase.Interface;
 using APICase.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace APICase.Repository
 {
@@ -10,39 +12,45 @@ namespace APICase.Repository
     {
         ClinicaContext ctx;
 
-       public ConsultaRepository(ClinicaContext _ctx)
+        public ConsultaRepository(ClinicaContext _ctx)
         {
-            ctx=  _ctx;
+            ctx = _ctx;
         }
 
-        public void Delete(int id)
+        public void Delete(Consulta consulta)
         {
-            throw new System.NotImplementedException();
+            ctx.Consulta.Remove(consulta);
+            ctx.SaveChanges();
         }
 
         public ICollection<Consulta> GetAll()
         {
-            throw new System.NotImplementedException();
+            return ctx.Consulta.ToList();
         }
 
         public Consulta GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.Consulta.Find(id);
         }
 
         public Consulta Insert(Consulta consulta)
         {
-            throw new System.NotImplementedException();
+            ctx.Consulta.Add(consulta);
+            ctx.SaveChanges();
+            return consulta;
         }
 
         public void Update(Consulta consulta)
         {
-            throw new System.NotImplementedException();
+            ctx.Entry(consulta).State = EntityState.Modified;
+            ctx.SaveChanges();
         }
 
         public void UpdatePatch(JsonPatchDocument patchconsulta, Consulta consulta)
         {
-            throw new System.NotImplementedException();
+            patchconsulta.ApplyTo(consulta);
+            ctx.Entry(consulta).State = EntityState.Modified;
+            ctx.SaveChanges();
         }
     }
 }

@@ -1,4 +1,6 @@
 using APICase.Data;
+using APICase.Interface;
+using APICase.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,6 +51,7 @@ namespace APICase
 
                 });
 
+             
                 //Para adcionar os comentários
                 var xmlArquivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlArquivo));
@@ -76,6 +79,8 @@ namespace APICase
 
 
             services.AddTransient<ClinicaContext, ClinicaContext>();
+            services.AddTransient<IConsulta, ConsultaRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

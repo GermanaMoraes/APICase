@@ -20,7 +20,7 @@ namespace APICase.Interface
         void Update(Consulta consulta);
 
         //Deletar a Consulta
-        void Delete(int id);
+        void Delete(Consulta consulta);
 
         //Update com Patch
         void UpdatePatch(JsonPatchDocument patchconsulta, Consulta consulta);
