@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace APICase
 {
@@ -51,7 +52,7 @@ namespace APICase
 
                 });
 
-             
+
                 //Para adcionar os comentários
                 var xmlArquivo = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlArquivo));
@@ -70,24 +71,28 @@ namespace APICase
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("DesafioCase-chave-autenticacao")),
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("APICase-chave-autenticacao")),
                         ClockSkew = TimeSpan.FromMinutes(30),
-                        ValidIssuer = "DesafioCase.webAPI",
-                        ValidAudience = "DesafioCase.webAPI"
+                        ValidIssuer = "APICase.webAPI",
+                        ValidAudience = "APICase.webAPI"
                     };
                 });
 
 
             services.AddTransient<ClinicaContext, ClinicaContext>();
             services.AddTransient<IConsulta, ConsultaRepository>();
-            services.AddTransient<IEspecialidade, EspecialidadeRepository>();            
+            services.AddTransient<IEspecialidade, EspecialidadeRepository>();
             services.AddTransient<IMedico, MedicoRepository>();
             services.AddTransient<IPaciente, PacienteRepository>();
             services.AddTransient<IUsuario, UsuarioRepository>();
+            services.AddTransient<ITipoUsuario, TipoRepository>();
             services.AddTransient<ILogin, LoginRepository>();
 
-           
-            );
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,5 +116,7 @@ namespace APICase
                 endpoints.MapControllers();
             });
         }
+
+
     }
 }
